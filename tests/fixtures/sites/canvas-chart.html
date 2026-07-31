@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>A Rendered Chart</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font:
+          16px/1.6 Georgia,
+          'Times New Roman',
+          serif;
+        color: #16181d;
+        background: #fff;
+      }
+      .wrap {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 32px 24px;
+      }
+      h1 {
+        font-size: 32px;
+        line-height: 1.2;
+        margin: 0 0 16px;
+      }
+      h2 {
+        font-size: 22px;
+        margin: 32px 0 12px;
+      }
+      p {
+        margin: 0 0 16px;
+      }
+      code,
+      pre {
+        font-family: ui-monospace, Menlo, monospace;
+      }
+      pre {
+        background: #f4f5f7;
+        padding: 14px;
+        overflow-x: auto;
+        border-radius: 6px;
+        font-size: 13px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 14px;
+      }
+      th,
+      td {
+        border: 1px solid #d7dae0;
+        padding: 7px 10px;
+        text-align: left;
+      }
+      th {
+        background: #f4f5f7;
+      }
+      .box {
+        width: 100%;
+        height: 180px;
+        background: linear-gradient(135deg, #2563eb, #7c3aed);
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>A Rendered Chart</h1>
+      <p>The chart below exists only as canvas pixels.</p>
+      <canvas id="chart" width="640" height="320"></canvas>
+      <p>Document mode should fall back to Exact for a page like this.</p>
+    </div>
+    <script>
+      const context = document.getElementById('chart').getContext('2d');
+      context.fillStyle = '#f8fafc';
+      context.fillRect(0, 0, 640, 320);
+      const values = [40, 120, 80, 200, 160, 260, 220, 300];
+      values.forEach((value, index) => {
+        context.fillStyle = '#2563eb';
+        context.fillRect(40 + index * 72, 300 - value, 48, value);
+      });
+      context.strokeStyle = '#94a3b8';
+      context.beginPath();
+      context.moveTo(30, 300);
+      context.lineTo(620, 300);
+      context.stroke();
+    </script>
+  </body>
+</html>

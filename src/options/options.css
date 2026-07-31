@@ -1,0 +1,135 @@
+.options {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.options__header h1 {
+  font-size: 22px;
+}
+
+.options__tagline {
+  margin: 4px 0 0;
+  color: var(--text-muted);
+}
+
+.options__section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-raised);
+}
+
+.options__section h2 {
+  font-size: 15px;
+}
+
+.options__section h3 {
+  margin-top: 6px;
+  font-size: 13.5px;
+}
+
+.options__note,
+.options__saved {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 12.5px;
+}
+
+.options__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 9px 0;
+  border-top: 1px solid var(--border);
+}
+
+.options__row--toggle {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+.options__rowText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.options__rowLabel {
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.options__rowHint {
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.options__row select {
+  padding: 6px 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+}
+
+.options__row input[type='checkbox'] {
+  accent-color: var(--accent);
+}
+
+.options__steps,
+.options__list {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.options__definitions {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13.5px;
+}
+
+.options__definitions dt {
+  font-weight: 600;
+}
+
+.options__definitions dd {
+  margin: 0 0 10px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.options__section p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+code {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--surface-sunken);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.92em;
+}
+
+.options .button {
+  align-self: flex-start;
+}

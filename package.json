@@ -1,0 +1,53 @@
+{
+  "name": "exactpdf",
+  "version": "1.0.0",
+  "description": "Select any webpage element, region, image, or complete page and save it as a clean PDF - locally and without the print dialogue.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "build": "npm run clean && npm run build:pages && npm run build:content && npm run build:manifest",
+    "build:pages": "vite build",
+    "build:content": "node scripts/build-content.mjs",
+    "build:manifest": "node scripts/build-manifest.mjs",
+    "clean": "node scripts/clean.mjs",
+    "icons": "node scripts/generate-icons.mjs",
+    "package": "npm run build && node scripts/package.mjs",
+    "dev": "vite build --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:unit": "vitest run tests/unit",
+    "test:integration": "vitest run tests/integration",
+    "test:watch": "vitest",
+    "test:e2e": "npm run build:e2e && playwright test",
+    "verify": "npm run format:check && npm run lint && npm run typecheck && npm run test",
+    "build:e2e": "EXACTPDF_E2E=1 npm run build"
+  },
+  "dependencies": {
+    "@mozilla/readability": "0.6.0",
+    "pdf-lib": "1.17.1",
+    "preact": "10.27.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@playwright/test": "1.56.1",
+    "@preact/preset-vite": "2.10.2",
+    "@types/chrome": "0.1.31",
+    "@types/node": "22.18.9",
+    "esbuild": "0.25.10",
+    "eslint": "9.39.1",
+    "globals": "16.4.0",
+    "jsdom": "26.1.0",
+    "prettier": "3.6.2",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.46.2",
+    "vite": "6.3.6",
+    "vitest": "3.2.4"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

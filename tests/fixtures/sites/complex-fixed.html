@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>A Sticky Layout</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font:
+          16px/1.6 Georgia,
+          'Times New Roman',
+          serif;
+        color: #16181d;
+        background: #fff;
+      }
+      .wrap {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 32px 24px;
+      }
+      h1 {
+        font-size: 32px;
+        line-height: 1.2;
+        margin: 0 0 16px;
+      }
+      h2 {
+        font-size: 22px;
+        margin: 32px 0 12px;
+      }
+      p {
+        margin: 0 0 16px;
+      }
+      code,
+      pre {
+        font-family: ui-monospace, Menlo, monospace;
+      }
+      pre {
+        background: #f4f5f7;
+        padding: 14px;
+        overflow-x: auto;
+        border-radius: 6px;
+        font-size: 13px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 14px;
+      }
+      th,
+      td {
+        border: 1px solid #d7dae0;
+        padding: 7px 10px;
+        text-align: left;
+      }
+      th {
+        background: #f4f5f7;
+      }
+      .box {
+        width: 100%;
+        height: 180px;
+        background: linear-gradient(135deg, #2563eb, #7c3aed);
+        border-radius: 8px;
+      }
+      .bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 12px 20px;
+        background: #2563eb;
+        color: #fff;
+        font-family: sans-serif;
+        font-size: 14px;
+        z-index: 10;
+      }
+      .bar--bottom {
+        top: auto;
+        bottom: 0;
+        background: #1e293b;
+      }
+      .fab {
+        position: fixed;
+        right: 24px;
+        bottom: 72px;
+        padding: 12px 16px;
+        background: #7c3aed;
+        color: #fff;
+        border-radius: 999px;
+        font-family: sans-serif;
+        font-size: 13px;
+        z-index: 10;
+      }
+      .top {
+        padding-top: 70px;
+        padding-bottom: 70px;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="bar">Sticky header that must appear exactly once</header>
+    <aside class="fab">Floating control</aside>
+    <div class="wrap top">
+      <h1>A Sticky Layout</h1>
+      <p>
+        1. The capture must reproduce this paragraph exactly as it appears on screen. Selectable text is the
+        defining property of a Document mode export.
+      </p>
+      <p>
+        2. Page breaks should fall between paragraphs rather than through a line of text. A tiled capture must
+        not repeat this line at a seam boundary.
+      </p>
+      <p>
+        3. Selectable text is the defining property of a Document mode export. Margins are measured from the
+        trimmed content, not from the viewport.
+      </p>
+      <p>
+        4. A tiled capture must not repeat this line at a seam boundary. The capture must reproduce this
+        paragraph exactly as it appears on screen.
+      </p>
+      <p>
+        5. Margins are measured from the trimmed content, not from the viewport. Page breaks should fall
+        between paragraphs rather than through a line of text.
+      </p>
+      <p>
+        6. The capture must reproduce this paragraph exactly as it appears on screen. Selectable text is the
+        defining property of a Document mode export.
+      </p>
+      <p>
+        7. Page breaks should fall between paragraphs rather than through a line of text. A tiled capture must
+        not repeat this line at a seam boundary.
+      </p>
+      <p>
+        8. Selectable text is the defining property of a Document mode export. Margins are measured from the
+        trimmed content, not from the viewport.
+      </p>
+      <p>
+        9. A tiled capture must not repeat this line at a seam boundary. The capture must reproduce this
+        paragraph exactly as it appears on screen.
+      </p>
+      <p>
+        10. Margins are measured from the trimmed content, not from the viewport. Page breaks should fall
+        between paragraphs rather than through a line of text.
+      </p>
+      <p>
+        11. The capture must reproduce this paragraph exactly as it appears on screen. Selectable text is the
+        defining property of a Document mode export.
+      </p>
+      <p>
+        12. Page breaks should fall between paragraphs rather than through a line of text. A tiled capture
+        must not repeat this line at a seam boundary.
+      </p>
+      <p>
+        13. Selectable text is the defining property of a Document mode export. Margins are measured from the
+        trimmed content, not from the viewport.
+      </p>
+      <p>
+        14. A tiled capture must not repeat this line at a seam boundary. The capture must reproduce this
+        paragraph exactly as it appears on screen.
+      </p>
+      <p>
+        15. Margins are measured from the trimmed content, not from the viewport. Page breaks should fall
+        between paragraphs rather than through a line of text.
+      </p>
+      <p>
+        16. The capture must reproduce this paragraph exactly as it appears on screen. Selectable text is the
+        defining property of a Document mode export.
+      </p>
+      <p>
+        17. Page breaks should fall between paragraphs rather than through a line of text. A tiled capture
+        must not repeat this line at a seam boundary.
+      </p>
+      <p>
+        18. Selectable text is the defining property of a Document mode export. Margins are measured from the
+        trimmed content, not from the viewport.
+      </p>
+      <p>
+        19. A tiled capture must not repeat this line at a seam boundary. The capture must reproduce this
+        paragraph exactly as it appears on screen.
+      </p>
+      <p>
+        20. Margins are measured from the trimmed content, not from the viewport. Page breaks should fall
+        between paragraphs rather than through a line of text.
+      </p>
+      <p>
+        21. The capture must reproduce this paragraph exactly as it appears on screen. Selectable text is the
+        defining property of a Document mode export.
+      </p>
+      <p>
+        22. Page breaks should fall between paragraphs rather than through a line of text. A tiled capture
+        must not repeat this line at a seam boundary.
+      </p>
+      <p>
+        23. Selectable text is the defining property of a Document mode export. Margins are measured from the
+        trimmed content, not from the viewport.
+      </p>
+      <p>
+        24. A tiled capture must not repeat this line at a seam boundary. The capture must reproduce this
+        paragraph exactly as it appears on screen.
+      </p>
+      <p>
+        25. Margins are measured from the trimmed content, not from the viewport. Page breaks should fall
+        between paragraphs rather than through a line of text.
+      </p>
+      <p>
+        26. The capture must reproduce this paragraph exactly as it appears on screen. Selectable text is the
+        defining property of a Document mode export.
+      </p>
+      <p>
+        27. Page breaks should fall between paragraphs rather than through a line of text. A tiled capture
+        must not repeat this line at a seam boundary.
+      </p>
+      <p>
+        28. Selectable text is the defining property of a Document mode export. Margins are measured from the
+        trimmed content, not from the viewport.
+      </p>
+      <p>
+        29. A tiled capture must not repeat this line at a seam boundary. The capture must reproduce this
+        paragraph exactly as it appears on screen.
+      </p>
+      <p>
+        30. Margins are measured from the trimmed content, not from the viewport. Page breaks should fall
+        between paragraphs rather than through a line of text.
+      </p>
+      <p>
+        31. The capture must reproduce this paragraph exactly as it appears on screen. Selectable text is the
+        defining property of a Document mode export.
+      </p>
+      <p>
+        32. Page breaks should fall between paragraphs rather than through a line of text. A tiled capture
+        must not repeat this line at a seam boundary.
+      </p>
+      <p>
+        33. Selectable text is the defining property of a Document mode export. Margins are measured from the
+        trimmed content, not from the viewport.
+      </p>
+      <p>
+        34. A tiled capture must not repeat this line at a seam boundary. The capture must reproduce this
+        paragraph exactly as it appears on screen.
+      </p>
+      <p>
+        35. Margins are measured from the trimmed content, not from the viewport. Page breaks should fall
+        between paragraphs rather than through a line of text.
+      </p>
+      <p>
+        36. The capture must reproduce this paragraph exactly as it appears on screen. Selectable text is the
+        defining property of a Document mode export.
+      </p>
+      <p>
+        37. Page breaks should fall between paragraphs rather than through a line of text. A tiled capture
+        must not repeat this line at a seam boundary.
+      </p>
+      <p>
+        38. Selectable text is the defining property of a Document mode export. Margins are measured from the
+        trimmed content, not from the viewport.
+      </p>
+      <p>
+        39. A tiled capture must not repeat this line at a seam boundary. The capture must reproduce this
+        paragraph exactly as it appears on screen.
+      </p>
+      <p>
+        40. Margins are measured from the trimmed content, not from the viewport. Page breaks should fall
+        between paragraphs rather than through a line of text.
+      </p>
+    </div>
+    <footer class="bar bar--bottom">Fixed footer</footer>
+  </body>
+</html>
