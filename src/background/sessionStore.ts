@@ -5,7 +5,8 @@
  * closes and is not written to disk. That choice does two things the plan
  * requires: the payload survives a Manifest V3 service-worker suspension mid
  * capture, and nothing captured is ever persisted beyond the browsing session.
- * Sessions are additionally deleted on download, cancellation and expiry.
+ * Sessions are additionally deleted on download, cancellation, expiry and when
+ * their preview tab closes.
  */
 
 import { SESSION_TTL_MS, STORAGE_KEYS } from '../shared/constants.js';
@@ -18,6 +19,8 @@ export interface StoredSession {
   readonly session: CaptureSession;
   readonly payload: CapturePayload | null;
   readonly warning: ExactPdfError | null;
+  /** The tab showing this capture's preview, once it has been opened. */
+  readonly previewTabId?: number;
 }
 
 function sessionKey(id: string): string {
@@ -101,8 +104,44 @@ export class SessionStore {
     return ok(stored);
   }
 
+  /**
+   * Records which tab is previewing the capture, so closing that tab can
+   * release it. Kept in storage rather than memory because the service worker
+   * may be suspended between opening the preview and the tab closing.
+   */
+  async attachPreviewTab(id: string, previewTabId: number): Promise<void> {
+    const existing = await this.read(id);
+    if (!existing.ok) {
+      return;
+    }
+    await this.storage.set(sessionKey(id), { ...existing.value, previewTabId });
+  }
+
   async release(id: string): Promise<void> {
     await this.storage.remove(sessionKey(id));
+  }
+
+  /**
+   * Releases every capture previewed in a tab that has closed.
+   *
+   * The preview page also asks for release on `pagehide`, but a message sent
+   * from a page that is being torn down is best-effort and can be dropped.
+   * `tabs.onRemoved` is delivered reliably, so this is the guarantee.
+   */
+  async releaseForPreviewTab(previewTabId: number): Promise<number> {
+    const keys = await this.storage.keys();
+    let released = 0;
+    for (const key of keys) {
+      if (!key.startsWith(STORAGE_KEYS.sessionPrefix)) {
+        continue;
+      }
+      const stored = await this.storage.get<StoredSession>(key);
+      if (stored?.previewTabId === previewTabId) {
+        await this.storage.remove(key);
+        released += 1;
+      }
+    }
+    return released;
   }
 
   /** Drops every session past its TTL. Runs on service-worker startup. */

@@ -116,6 +116,8 @@ describe('element capture', () => {
 
     const stored = await sessions.read(sessionId);
     expect(stored.ok && stored.value.payload?.kind).toBe('visual');
+    // The fake opens every tab with id 99; closing it must release the capture.
+    expect(stored.ok && stored.value.previewTabId).toBe(99);
   });
 
   it('records what the user picked so the filename describes it', async () => {

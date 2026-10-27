@@ -150,6 +150,36 @@ describe('SessionStore', () => {
     expect((await store.read('new')).ok).toBe(true);
   });
 
+  it('releases the capture whose preview tab closed, and only that one', async () => {
+    await store.create({ id: 'previewed', mode: 'element', tabId: 1, source: SOURCE });
+    await store.attachPayload('previewed', PAYLOAD);
+    await store.attachPreviewTab('previewed', 42);
+    await store.create({ id: 'other', mode: 'element', tabId: 1, source: SOURCE });
+    await store.attachPreviewTab('other', 43);
+
+    expect(await store.releaseForPreviewTab(42)).toBe(1);
+    expect((await store.read('previewed')).ok).toBe(false);
+    expect((await store.read('other')).ok).toBe(true);
+  });
+
+  it('keeps the payload when the preview tab is recorded', async () => {
+    await store.create({ id: 's1', mode: 'element', tabId: 1, source: SOURCE });
+    await store.attachPayload('s1', PAYLOAD);
+    await store.attachPreviewTab('s1', 42);
+
+    const read = await store.read('s1');
+    expect(read.ok && read.value.payload).toEqual(PAYLOAD);
+    expect(read.ok && read.value.previewTabId).toBe(42);
+  });
+
+  it('releases nothing when an unrelated tab closes', async () => {
+    await store.create({ id: 's1', mode: 'element', tabId: 1, source: SOURCE });
+    await store.attachPreviewTab('s1', 42);
+
+    expect(await store.releaseForPreviewTab(7)).toBe(0);
+    expect((await store.read('s1')).ok).toBe(true);
+  });
+
   it('ignores unrelated storage keys when pruning', async () => {
     await storage.set(STORAGE_KEYS.settings, { schemaVersion: 1 });
     await store.create({ id: 's1', mode: 'element', tabId: 1, source: SOURCE });

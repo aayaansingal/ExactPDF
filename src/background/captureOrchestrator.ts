@@ -302,7 +302,8 @@ export class CaptureOrchestrator {
 
   private async openPreview(sessionId: string): Promise<void> {
     const url = this.deps.chrome.runtime.getUrl(`src/preview/index.html?session=${sessionId}`);
-    await this.deps.chrome.tabs.create(url);
+    const previewTab = await this.deps.chrome.tabs.create(url);
+    await this.deps.sessions.attachPreviewTab(sessionId, previewTab.id);
   }
 
   private clearPending(sessionId: string): void {

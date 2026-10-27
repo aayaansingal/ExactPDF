@@ -62,11 +62,15 @@ export async function startFixtureServer(): Promise<FixtureServer> {
   return {
     origin,
     url: (name) => `${origin}/${name}`,
+    // `close()` alone waits for every open connection to end. The browser is
+    // still running when this fixture is torn down and may hold connections
+    // open indefinitely, so they are closed explicitly.
     close: () =>
       new Promise<void>((resolvePromise) => {
         server.close(() => {
           resolvePromise();
         });
+        server.closeAllConnections();
       }),
   };
 }

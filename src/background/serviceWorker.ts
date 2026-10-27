@@ -123,6 +123,12 @@ chrome.runtime.onStartup.addListener(() => {
   void sessions.pruneExpired();
 });
 
+// Closing a preview tab releases its capture, even if the page's own release
+// message was lost while the tab was being torn down.
+chrome.tabs.onRemoved.addListener((tabId) => {
+  void sessions.releaseForPreviewTab(tabId);
+});
+
 chrome.contextMenus.onClicked.addListener((info) => {
   void (async () => {
     const settings = await readSettings();

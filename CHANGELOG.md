@@ -17,6 +17,13 @@ with Developer Mode → Load unpacked. Not published on the Chrome Web Store.
 - A tag-triggered GitHub Actions workflow verifies, builds and attaches the ZIP
   to a draft release.
 
+### Fixed
+
+- Closing the preview tab now reliably deletes its capture. The page's own
+  release message could be lost while the tab was closing, leaving the capture
+  in session storage until it expired; the service worker now also releases it
+  when the tab is removed.
+
 ### Added
 
 - **Four capture modes.** Select Element with plain-language labels and
@@ -58,5 +65,5 @@ with Developer Mode → Load unpacked. Not published on the Chrome Web Store.
 
 ### Testing
 
-- 242 unit and integration tests, plus 12 real-browser end-to-end tests.
+- 245 unit and integration tests, plus 12 real-browser end-to-end tests.
 - Ten generated fixture pages covering the compatibility matrix.
