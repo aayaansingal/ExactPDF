@@ -3,9 +3,19 @@
 All notable changes to ExactPDF are recorded here. This project follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] — unreleased
+## [1.0.0-beta.1] — 2026-10-26
 
-First complete implementation. Not yet submitted to the Chrome Web Store.
+First public beta, distributed as a ZIP through GitHub Releases for installation
+with Developer Mode → Load unpacked. Not published on the Chrome Web Store.
+
+### Release tooling
+
+- `npm run package` produces a reproducible ZIP, a SHA-256 checksum and a file
+  list, and refuses to package anything other than runtime file types.
+- Prerelease versions map onto Chrome's integer-only `version` field, with the
+  full version shown through `version_name`.
+- A tag-triggered GitHub Actions workflow verifies, builds and attaches the ZIP
+  to a draft release.
 
 ### Added
 
@@ -48,5 +58,5 @@ First complete implementation. Not yet submitted to the Chrome Web Store.
 
 ### Testing
 
-- 240 unit and integration tests, plus 12 real-browser end-to-end tests.
+- 242 unit and integration tests, plus 12 real-browser end-to-end tests.
 - Ten generated fixture pages covering the compatibility matrix.

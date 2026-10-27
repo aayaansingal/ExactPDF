@@ -7,7 +7,7 @@ a fixture page.
 ## Getting set up
 
 ```bash
-npm install
+npm ci
 npm run build
 npm run verify
 ```

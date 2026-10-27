@@ -48,12 +48,38 @@ export interface ManifestOptions {
   readonly e2eHostAccess?: boolean;
 }
 
+export interface ManifestVersionFields {
+  readonly version: string;
+  readonly version_name?: string;
+}
+
+/**
+ * Maps a package.json semantic version onto the manifest's two version fields.
+ *
+ * Chrome accepts only one to four dot-separated integers in `version`, so a
+ * prerelease such as `1.0.0-beta.1` cannot appear there. Its numeric core goes
+ * in `version` and the full string in `version_name`, which is what the
+ * extensions page displays. A plain release needs no `version_name`.
+ */
+export function toManifestVersion(packageVersion: string): ManifestVersionFields {
+  const match = /^(\d+\.\d+\.\d+)(?:-([0-9A-Za-z.-]+))?$/.exec(packageVersion);
+  if (match === null) {
+    throw new Error(
+      `Unsupported package version "${packageVersion}"; expected MAJOR.MINOR.PATCH[-PRERELEASE].`,
+    );
+  }
+
+  const core = match[1] ?? packageVersion;
+  const prerelease = match[2];
+  return prerelease === undefined ? { version: core } : { version: core, version_name: packageVersion };
+}
+
 export function buildManifest(version: string, options: ManifestOptions = {}): chrome.runtime.ManifestV3 {
   return {
     manifest_version: 3,
     name: 'ExactPDF - Select and Save Web Content as PDF',
     short_name: 'ExactPDF',
-    version,
+    ...toManifestVersion(version),
     description:
       'Select any webpage element, region, image, or complete page and save it as a clean PDF - locally and without the print dialogue.',
     minimum_chrome_version: '120',

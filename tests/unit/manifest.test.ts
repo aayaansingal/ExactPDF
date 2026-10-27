@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildManifest, PERMISSION_JUSTIFICATIONS } from '../../src/manifest.config.js';
+import { buildManifest, PERMISSION_JUSTIFICATIONS, toManifestVersion } from '../../src/manifest.config.js';
 
 describe('production manifest', () => {
   const manifest = buildManifest('1.2.3');
@@ -10,6 +10,19 @@ describe('production manifest', () => {
 
   it('carries the version it was given', () => {
     expect(manifest.version).toBe('1.2.3');
+    expect(manifest.version_name).toBeUndefined();
+  });
+
+  it('splits a prerelease into a numeric version and a display name', () => {
+    const prerelease = buildManifest('1.0.0-beta.1');
+    expect(prerelease.version).toBe('1.0.0');
+    expect(prerelease.version_name).toBe('1.0.0-beta.1');
+  });
+
+  it('refuses versions Chrome could not load', () => {
+    for (const invalid of ['1.0', 'v1.0.0', '1.0.0-', '1.0.0+build.5']) {
+      expect(() => toManifestVersion(invalid)).toThrow();
+    }
   });
 
   it('requests exactly the four documented permissions', () => {

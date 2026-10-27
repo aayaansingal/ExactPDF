@@ -1,0 +1,76 @@
+# Builds the extension and attaches the ZIP to a GitHub Release.
+#
+# Runs only when a version tag such as v1.0.0 or v1.0.0-beta.1 is pushed, never
+# on ordinary pushes to main. The release is created as a draft, so nothing is
+# public until a maintainer reviews it and presses "Publish release".
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+-*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # The tag is the public version, so it must agree with package.json.
+      - name: Check tag matches package.json
+        run: |
+          package_version="$(node -p "require('./package.json').version")"
+          if [ "v${package_version}" != "${GITHUB_REF_NAME}" ]; then
+            echo "Tag ${GITHUB_REF_NAME} does not match package.json version ${package_version}" >&2
+            exit 1
+          fi
+
+      - name: Format, lint, typecheck, unit and integration tests
+        run: npm run verify
+
+      # Extensions only load in a headed browser, so the end-to-end suite runs
+      # under a virtual display.
+      - name: End-to-end tests
+        run: |
+          npx playwright install --with-deps chromium
+          xvfb-run --auto-servernum npm run test:e2e
+
+      # `npm run package` rebuilds dist/ from scratch, discarding the
+      # end-to-end build above, and refuses to write a ZIP that fails its checks.
+      - name: Build and package
+        run: npm run package
+
+      - name: Create draft release with the ZIP attached
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          zip_path="release/exactpdf-${version}.zip"
+          notes_path="docs/releases/${GITHUB_REF_NAME}.md"
+
+          prerelease_flag=""
+          case "${version}" in *-*) prerelease_flag="--prerelease" ;; esac
+
+          if gh release view "${GITHUB_REF_NAME}" >/dev/null 2>&1; then
+            # A release prepared by hand already exists; just attach the assets.
+            gh release upload "${GITHUB_REF_NAME}" "${zip_path}" "${zip_path}.sha256" --clobber
+          else
+            notes_flag="--generate-notes"
+            if [ -f "${notes_path}" ]; then notes_flag="--notes-file=${notes_path}"; fi
+            gh release create "${GITHUB_REF_NAME}" "${zip_path}" "${zip_path}.sha256" \
+              --draft ${prerelease_flag} \
+              --title "ExactPDF ${GITHUB_REF_NAME}" \
+              "${notes_flag}"
+          fi

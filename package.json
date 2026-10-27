@@ -1,6 +1,6 @@
 {
   "name": "exactpdf",
-  "version": "1.0.0",
+  "version": "1.0.0-beta.1",
   "description": "Select any webpage element, region, image, or complete page and save it as a clean PDF - locally and without the print dialogue.",
   "private": true,
   "type": "module",

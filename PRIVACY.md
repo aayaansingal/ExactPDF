@@ -1,6 +1,6 @@
 # Privacy policy
 
-**Last updated: 23 July 2026 · Applies to ExactPDF version 1.0.0**
+**Last updated: 23 July 2026 · Applies to ExactPDF version 1.0.0-beta.1**
 
 ## The short version
 
