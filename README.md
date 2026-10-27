@@ -13,7 +13,7 @@ table. ExactPDF lets you choose the part you actually want and decide whether th
 result should look exactly like the screen or read like a clean document.
 
 <p align="center">
-  <a href="https://github.com/neverseennightlock24/ExactPDF/releases"><strong>⬇ Download Latest Release</strong></a>
+  <a href="https://github.com/aayaansingal/ExactPDF/releases"><strong>⬇ Download Latest Release</strong></a>
 </p>
 
 > **Status:** `1.0.0-beta.1`, a public beta distributed through GitHub Releases.
@@ -63,7 +63,7 @@ ExactPDF works in **Google Chrome 120 or newer**, **Brave**, **Microsoft Edge**
 and other Chromium-based desktop browsers. Firefox, Safari and mobile browsers
 are not supported.
 
-1. Open the [Releases page](https://github.com/neverseennightlock24/ExactPDF/releases)
+1. Open the [Releases page](https://github.com/aayaansingal/ExactPDF/releases)
    and download `exactpdf-<version>.zip` from the newest release's **Assets**.
    (Download the ZIP asset, not "Source code".)
 2. Unzip it. The resulting folder contains `manifest.json` directly inside it.
