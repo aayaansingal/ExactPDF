@@ -16,7 +16,9 @@ permissions:
 
 jobs:
   release:
-    runs-on: ubuntu-latest
+    # Pinned rather than ubuntu-latest: that label moved to Ubuntu 26.04, for
+    # which Playwright 1.56 cannot install Chromium or its system dependencies.
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v5
 
